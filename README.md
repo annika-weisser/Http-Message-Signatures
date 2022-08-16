@@ -60,8 +60,8 @@ The Boolean return value indicates whether the signature is valid.
 # Maven
 ```
 <dependency>
-<groupId>HttpMessageSignatures</groupId>
-<artifactId>HttpMessageSignatures09</artifactId>
+	<groupId>HttpMessageSignatures</groupId>
+	<artifactId>HttpMessageSignatures09</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
