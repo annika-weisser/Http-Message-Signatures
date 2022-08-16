@@ -47,8 +47,8 @@ SignedHttpResponse signedResponse = SignedHttpMessageFactory.createSignedHttpRes
 Since multiple signatures can be verified the corresponding public keys and key IDs are add into a list of KeyMap.
 ```
   List<KeyMap> listeKeys = new ArrayList<>();
-        KeyMap map = new KeyMap("test-shared-secret", sharedKey);
-        listeKeys.add(map);
+  KeyMap map = new KeyMap("test-shared-secret", sharedKey);
+  listeKeys.add(map);
 ```
         
 For verification, pass the message and list of KeyMaps:
