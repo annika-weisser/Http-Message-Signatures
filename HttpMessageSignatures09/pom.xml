@@ -1,0 +1,151 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>HttpMessageSignatures</groupId>
+	<artifactId>HttpMessageSignatures09</artifactId>
+
+	<version>0.0.1-SNAPSHOT</version>
+	<name>HttpMessageSignatures09</name>
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcprov-jdk15on</artifactId>
+				<version>1.70</version>
+			</dependency>
+			<dependency>
+				<groupId>net.i2p.crypto</groupId>
+				<artifactId>eddsa</artifactId>
+				<version>0.3.0</version>
+			</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-math3</artifactId>
+				<version>3.6.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.12.0</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.glassfish.jersey</groupId>
+				<artifactId>jersey-bom</artifactId>
+				<version>3.1.0-M3</version>
+<!--                 <version>${jersey.version}</version> -->
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${javax.servlet-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcprov-jdk15on</artifactId>
+				<version>1.70</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.5.13</version>
+			</dependency>
+<!--             <dependency> -->
+<!--                 <groupId>org.apache.httpcomponents</groupId> -->
+<!--                 <artifactId>httpcore</artifactId> -->
+<!--                 <version>4.2.4</version> -->
+<!--             </dependency> -->
+
+<!-- Thanks for using https://jar-download.com -->
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-math3</artifactId>
+				<version>3.6.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.12.0</version>
+			</dependency>
+
+
+		</dependencies>
+	</dependencyManagement>
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+
+
+
+	<dependencies>
+		<dependency>
+			<groupId>net.i2p.crypto</groupId>
+			<artifactId>eddsa</artifactId>
+			<version>0.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>21.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
+            <!-- use the following artifactId if you don't need servlet 2.x compatibility -->
+            <!-- artifactId>jersey-container-servlet</artifactId -->
+		</dependency>
+        <!-- uncomment this to get JSON support
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-moxy</artifactId>
+        </dependency>
+        -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+<!--             <dependency> -->
+<!--                 <groupId>org.apache.httpcomponents</groupId> -->
+<!--                 <artifactId>httpcore</artifactId>  -->
+<!--             </dependency> -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk14</artifactId>
+			<version>1.70</version>
+		</dependency>
+<!-- Thanks for using https://jar-download.com -->
+
+
+	</dependencies>
+<!--     <properties> -->
+<!--         <jersey.version>2.16</jersey.version> -->
+<!--         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
+<!--     </properties> -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
