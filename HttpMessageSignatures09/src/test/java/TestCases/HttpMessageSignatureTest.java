@@ -20,6 +20,7 @@ package TestCases;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.net.URI;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -296,6 +297,42 @@ public class HttpMessageSignatureTest {
         listeKeys.add(map);
 
         boolean verify = HttpMessageSignerFacade.verifyResponse(signedResponse, listeKeys);
+        assertTrue(verify);
+    }
+
+    /*
+     * Additional test request with dns-target parameter.
+     */
+    @Test
+    public void testDnsTargetParameter() throws Exception {
+        HttpPost request = TestMessagProvider.getTestRequest();
+        String createValue = Instant.now().getEpochSecond() + "";
+        byte[] privateKey = KeyProvider.getEd25519PrivateKey();
+
+        request.setURI(new URI("//localhost/foo?param=Value&Pet=dog"));
+
+        List<Component> coveredHeaders = Arrays.asList(new Component("date", null, false),
+                new Component("@method", null, false), new Component("@path", null, false),
+                new Component("@authority", null, false), new Component("content-type", null, false),
+                new Component("content-length", null, false));
+        SignatureParameter params = new SignatureParameter("ed25519", "test-key-ed25519",
+                Instant.now().getEpochSecond(), "sig-b26", coveredHeaders);
+
+        SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
+        signedRequest.setDnsTarget();
+        signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);
+
+        assertEquals(
+                "sig-b26=(\"date\" \"@method\" \"@path\" \"@authority\" "
+                        + "\"content-type\" \"content-length\");created=" + createValue
+                        + ";keyid=\"test-key-ed25519\";alg=\"ed25519\";dns-target=\"127.0.0.1\"",
+                signedRequest.getFirstHeader("Signature-Input").getValue());
+
+        List<KeyMap> listeKeys = new ArrayList<>();
+        byte[] pubicKey = KeyProvider.getEd25519PublicKey();
+        KeyMap map = new KeyMap("test-key-ed25519", pubicKey);
+        listeKeys.add(map);
+        boolean verify = HttpMessageSignerFacade.verifyRequest(signedRequest, listeKeys);
         assertTrue(verify);
     }
 

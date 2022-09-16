@@ -167,6 +167,11 @@ public class SignatureParameter {
     private List<Component> coveredHeaders;
 
     /**
+     * dnsTarget contains target IP-address.
+     */
+    private String dnsTarget;
+
+    /**
      * @return the signLabel
      */
     public String getSignLabel() {
@@ -231,9 +236,26 @@ public class SignatureParameter {
         if (((nonce != null)) && (!nonce.isEmpty())) {
             value = value + ";" + "nonce" + "=" + "\"" + nonce + "\"";
         }
+        if ((dnsTarget != null) && (!dnsTarget.isEmpty())) {
+            value = value + ";" + "dns-target" + "=" + "\"" + dnsTarget + "\"";
+        }
 
         return value;
 
+    }
+
+    /**
+     * @return the dnsTarget
+     */
+    public String getDnsTarget() {
+        return dnsTarget;
+    }
+
+    /**
+     * @param dnsTarget the dnsTarget to set
+     */
+    protected void setDnsTarget(String dnsTarget) {
+        this.dnsTarget = dnsTarget;
     }
 
 }

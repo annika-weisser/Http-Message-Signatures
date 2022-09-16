@@ -28,7 +28,7 @@ import org.apache.http.message.AbstractHttpMessage;
 public abstract class SignedHttpMessage extends AbstractHttpMessage {
 
     /** signature parameter: contain all parameters belonging to the signature */
-    private SignatureParameter signatureParams;
+    protected SignatureParameter signatureParams;
     /** signature of the message */
     private String signature;
     /** signature-input values */

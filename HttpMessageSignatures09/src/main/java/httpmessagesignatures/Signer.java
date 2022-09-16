@@ -35,7 +35,7 @@ import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import Exceptions.AmbiguousSignatureLableException;
+import exceptions.AmbiguousSignatureLableException;
 
 /**
  * Signer performs the signing of a HTTP message.

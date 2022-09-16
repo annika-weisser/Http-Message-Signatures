@@ -30,7 +30,7 @@ import java.util.List;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 
-import Exceptions.AmbiguousSignatureLableException;
+import exceptions.AmbiguousSignatureLableException;
 
 /**
  * Signer performs the signing of a response.

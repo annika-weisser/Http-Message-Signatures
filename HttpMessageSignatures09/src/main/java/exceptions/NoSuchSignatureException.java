@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package Exceptions;
+package exceptions;
 
 /**
  * NoSuchSignatureException is thrown if there is no signature matching the signature label in the message

@@ -16,7 +16,9 @@
 */
 package httpmessagesignatures;
 
+import java.net.SocketException;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -24,7 +26,7 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
-import Exceptions.AmbiguousSignatureLableException;
+import exceptions.AmbiguousSignatureLableException;
 
 /**
  * Facade class for verifying and signing request and response messages.
@@ -43,10 +45,13 @@ public class HttpMessageSignerFacade {
      * @throws InvalidAlgorithmParameterException
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeyException
+     * @throws UnknownHostException
+     * @throws SocketException
     */
     public static SignedHttpRequest signRequest(SignedHttpRequest request, byte[] privateKeyMaterial)
             throws InvalidKeyException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
-            InvalidKeySpecException, SignatureException, AmbiguousSignatureLableException, URISyntaxException {
+            InvalidKeySpecException, SignatureException, AmbiguousSignatureLableException, URISyntaxException,
+            SocketException, UnknownHostException {
         return RequestSigner.signRequest(request, privateKeyMaterial);
     }
 
@@ -62,7 +67,8 @@ public class HttpMessageSignerFacade {
      */
     public static SignedHttpResponse signResponse(SignedHttpResponse response, byte[] privateKeyMaterial)
             throws InvalidKeyException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
-            InvalidKeySpecException, SignatureException, AmbiguousSignatureLableException, URISyntaxException {
+            InvalidKeySpecException, SignatureException, AmbiguousSignatureLableException, URISyntaxException,
+            SocketException, UnknownHostException {
         return ResponseSigner.signResponse(response, privateKeyMaterial);
     }
 

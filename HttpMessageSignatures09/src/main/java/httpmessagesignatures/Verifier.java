@@ -47,7 +47,7 @@ import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import Exceptions.NoSuchSignatureException;
+import exceptions.NoSuchSignatureException;
 
 /**
  * Verifier performs the verification of a HTTP message.

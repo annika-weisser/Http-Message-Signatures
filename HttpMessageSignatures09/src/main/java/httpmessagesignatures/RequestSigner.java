@@ -16,7 +16,9 @@
 */
 package httpmessagesignatures;
 
+import java.net.SocketException;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -28,7 +30,7 @@ import java.util.List;
 
 import org.apache.http.Header;
 
-import Exceptions.AmbiguousSignatureLableException;
+import exceptions.AmbiguousSignatureLableException;
 
 /**
  * Signer performs the signing of a request.
@@ -54,7 +56,8 @@ public class RequestSigner extends Signer {
      */
     protected static SignedHttpRequest signRequest(SignedHttpRequest request, byte[] privateKeyMaterial)
             throws AmbiguousSignatureLableException, NoSuchAlgorithmException, URISyntaxException, InvalidKeyException,
-            InvalidAlgorithmParameterException, InvalidKeySpecException, SignatureException {
+            InvalidAlgorithmParameterException, InvalidKeySpecException, SignatureException, SocketException,
+            UnknownHostException {
 
         HttpFieldTransformer.canonicalizeHTTPHeader(request);
         SignatureParameter signatureParameter = request.getSignatureParams();
