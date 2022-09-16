@@ -17,6 +17,7 @@
 package httpmessagesignatures;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.apache.http.HeaderIterator;
 import org.apache.http.HttpRequest;
@@ -36,8 +37,10 @@ public class SignedHttpMessageFactory {
      * @param request
      * @param signatureParams
      * @return signedRequest
+     * @throws URISyntaxException
      */
-    public static SignedHttpRequest createSignedHttpRequest(HttpRequest request, SignatureParameter signatureParams) {
+    public static SignedHttpRequest createSignedHttpRequest(HttpRequest request, SignatureParameter signatureParams)
+            throws URISyntaxException {
         SignedHttpRequest signedRequest = new SignedHttpRequest(request.getRequestLine().getMethod(),
                 request.getRequestLine().getUri(), signatureParams);
 
@@ -57,9 +60,10 @@ public class SignedHttpMessageFactory {
      * @param signatureParams
      * @param messageBody
      * @return signedRequest
+     * @throws URISyntaxException
      */
     public static SignedHttpRequest createSignedHttpRequest(HttpRequest request, SignatureParameter signatureParams,
-            String messageBody) {
+            String messageBody) throws URISyntaxException {
 
         SignedHttpRequest signedRequest = new SignedHttpRequest(request.getRequestLine().getMethod(),
                 request.getRequestLine().getUri(), signatureParams, messageBody);
@@ -78,8 +82,9 @@ public class SignedHttpMessageFactory {
      * In this case, the signature parameters are extracted from the signature input header.
      * @param request
      * @return signedRequest
+     * @throws URISyntaxException
      */
-    public static SignedHttpRequest createSignedHttpRequest(HttpRequest request) {
+    public static SignedHttpRequest createSignedHttpRequest(HttpRequest request) throws URISyntaxException {
 
         SignedHttpRequest signedRequest = new SignedHttpRequest(request.getRequestLine().getMethod(),
                 request.getRequestLine().getUri(), null);

@@ -16,6 +16,8 @@
 */
 package httpmessagesignatures;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,7 @@ public class RequestVerifier extends Verifier {
      * @throws Exception
      */
     protected static boolean verifyRequest(SignedHttpRequest request, List<KeyMap> keys) throws Exception {
-
+        String host = request.getURI().getHost();
         boolean verify = false;
 
         // enable safe Transformation
@@ -79,6 +81,13 @@ public class RequestVerifier extends Verifier {
 
             SignatureParameter params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel,
                     coveredHeaders);
+            String dnsTarget = signatureParameterMap.get("dns-target");
+            if (dnsTarget != null) {
+                if (!isDnsTargetChanged(dnsTarget, host)) {
+                    return false;
+                }
+                params.setDnsTarget(dnsTarget);
+            }
 
             //Step 5: Determine the verification key material for this signature.
 
@@ -114,6 +123,35 @@ public class RequestVerifier extends Verifier {
 
         return verify;
 
+    }
+
+    /**
+     * Checks whether the dns-target matches the host.
+     * @param targetIp is the IP address contained in the dns-target parameter.
+     * @param host contains the hostname.
+     * @return Returns true if the IP address matches the given host.
+     */
+    private static boolean isDnsTargetChanged(String targetIp, String host) {
+        try {
+
+            String localHostName = InetAddress.getLocalHost().getHostName();
+            InetAddress[] addresses;
+            //check wether host is localhost
+            if ((host != null) && host.equals("localhost")) {
+                addresses = InetAddress.getAllByName(host);
+            } else {
+                addresses = InetAddress.getAllByName(localHostName);
+            }
+
+            for (InetAddress addresse : addresses) {
+                if (addresse.getHostAddress().equals(targetIp)) {
+                    return true;
+                }
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

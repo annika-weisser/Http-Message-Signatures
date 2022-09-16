@@ -16,6 +16,11 @@
 */
 package httpmessagesignatures;
 
+import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.UnknownHostException;
+
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpVersion;
 import org.apache.http.ProtocolVersion;
@@ -32,7 +37,7 @@ public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest 
     /** HTTP method of request */
     private final String method;
     /** URI of the request */
-    private String uri;
+    private URI uri;
     /** BasicRequestline of the request */
     private BasicRequestLine requestline;
 
@@ -41,11 +46,13 @@ public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest 
      * @param method
      * @param uri
      * @param signatureParams
+     * @throws URISyntaxException
      */
-    public SignedHttpRequest(final String method, final String uri, SignatureParameter signatureParams) {
+    public SignedHttpRequest(final String method, final String uri, SignatureParameter signatureParams)
+            throws URISyntaxException {
         super(signatureParams);
         this.method = method;
-        this.uri = uri;
+        this.uri = new URI(uri);
         requestline = null;
     }
 
@@ -55,12 +62,13 @@ public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest 
      * @param uri
      * @param signatureParams
      * @param messageBody
+     * @throws URISyntaxException
      */
     public SignedHttpRequest(final String method, final String uri, SignatureParameter signatureParams,
-            String messageBody) {
+            String messageBody) throws URISyntaxException {
         super(signatureParams);
         this.method = method;
-        this.uri = uri;
+        this.uri = new URI(uri);
         this.messageBody = messageBody;
         requestline = null;
 
@@ -96,18 +104,27 @@ public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest 
      * @param version
      */
     public void setProtocolVersion(HttpVersion version) {
-        requestline = new BasicRequestLine(method, uri, version);
+        requestline = new BasicRequestLine(method, uri.toString(), version);
+    }
+
+    /**
+     * @param uri
+     * @throws URISyntaxException
+     */
+    public void setURI(String uri) throws URISyntaxException {
+
+        if (requestline != null) {
+            requestline = new BasicRequestLine(method, uri, requestline.getProtocolVersion());
+        }
+        this.uri = new URI(uri);
+
     }
 
     /**
      * @param uri
      */
-    public void setURI(String uri) {
-        this.uri = uri;
-        if (requestline != null) {
-            requestline = new BasicRequestLine(method, uri, requestline.getProtocolVersion());
-        }
-
+    public URI getURI() {
+        return uri;
     }
 
     /**
@@ -126,6 +143,20 @@ public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest 
     String getMessageBody() {
 
         return messageBody;
+    }
+
+    /** (non-Javadoc)
+     * set dns-target parameter
+     */
+    public void setDnsTarget() {
+        try {
+
+            String host = uri.getHost();
+            super.signatureParams.setDnsTarget(InetAddress.getByName(host).getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

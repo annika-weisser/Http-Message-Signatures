@@ -14,7 +14,7 @@
  * is subject to license terms.
  *
  */
-package Exceptions;
+package exceptions;
 
 /**
  * AmbiguousSignatureLableException thrown when a signatu label is ambiguous.
