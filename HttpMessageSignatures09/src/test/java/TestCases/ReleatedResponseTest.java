@@ -19,7 +19,6 @@ package TestCases;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,8 +60,8 @@ public class ReleatedResponseTest {
         List<Component> coveredHeadersRequest = Arrays.asList(new Component("@authority", null, false),
                 new Component("content-digest", null, false));
 
-        SignatureParameter requestParams = new SignatureParameter("hmac-sha256", "test-shared-secret",
-                Instant.now().getEpochSecond(), "sig-1", coveredHeadersRequest);
+        SignatureParameter requestParams = new SignatureParameter("hmac-sha256", "test-shared-secret", "sig-1",
+                coveredHeadersRequest);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, requestParams,
                 messageBody.toString());
@@ -92,8 +91,8 @@ public class ReleatedResponseTest {
         coveredHeadersResponse.add(new Component("date", true));
 
         HttpResponse response = TestMessagProvider.getResponse();
-        SignatureParameter responseParams = new SignatureParameter("hmac-sha256", "test-shared-secret",
-                Instant.now().getEpochSecond(), "sig-b24", coveredHeadersResponse);
+        SignatureParameter responseParams = new SignatureParameter("hmac-sha256", "test-shared-secret", "sig-b24",
+                coveredHeadersResponse);
 
         SignedHttpResponse signedResponse = SignedHttpMessageFactory.createSignedHttpResponse(response, responseParams,
                 signedRequest);
@@ -125,8 +124,8 @@ public class ReleatedResponseTest {
         List<Component> coveredHeadersRequest = Arrays.asList(new Component("@authority"),
                 new Component("content-digest"));
 
-        SignatureParameter requestParams = new SignatureParameter("hmac-sha256", "test-shared-secret",
-                Instant.now().getEpochSecond(), "sig-1", coveredHeadersRequest);
+        SignatureParameter requestParams = new SignatureParameter("hmac-sha256", "test-shared-secret", "sig-1",
+                coveredHeadersRequest);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, requestParams,
                 messageBody.toString());
@@ -144,8 +143,8 @@ public class ReleatedResponseTest {
         List<Component> coveredHeadersRequestSecondSig = Arrays.asList(new Component("@authority"),
                 new Component("content-digest"));
 
-        SignatureParameter requestParamsSecondSig = new SignatureParameter("hmac-sha256", "test-shared-secret",
-                Instant.now().getEpochSecond(), "sig-2", coveredHeadersRequestSecondSig);
+        SignatureParameter requestParamsSecondSig = new SignatureParameter("hmac-sha256", "test-shared-secret", "sig-2",
+                coveredHeadersRequestSecondSig);
 
         signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(signedRequest, requestParamsSecondSig,
                 messageBody.toString());
@@ -160,8 +159,8 @@ public class ReleatedResponseTest {
         List<Component> coveredHeadersResponse = Arrays.asList(new Component("@authority", true),
                 new Component("content-digest"), new Component("signature", parameterSiganture, true));
         HttpResponse response = TestMessagProvider.getResponse();
-        SignatureParameter responseParams = new SignatureParameter("hmac-sha256", "test-shared-secret",
-                Instant.now().getEpochSecond(), "sig-b24", coveredHeadersResponse);
+        SignatureParameter responseParams = new SignatureParameter("hmac-sha256", "test-shared-secret", "sig-b24",
+                coveredHeadersResponse);
 
         SignedHttpResponse signedResponse = SignedHttpMessageFactory.createSignedHttpResponse(response, responseParams,
                 signedRequest);

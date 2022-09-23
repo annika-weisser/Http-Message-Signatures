@@ -76,11 +76,12 @@ public class RequestVerifier extends Verifier {
             if (signatureParameterMap.get("expires") != null) {
 
                 expires = Long.valueOf(signatureParameterMap.get("expires"));
-                params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel, coveredHeaders);
+                params = new SignatureParameter(algorithm, keyId, nonce, expires, signLabel, coveredHeaders);
 
             } else {
-                params = new SignatureParameter(algorithm, keyId, nonce, created, signLabel, coveredHeaders);
+                params = new SignatureParameter(algorithm, keyId, nonce, signLabel, coveredHeaders);
             }
+            params.setCreated(created);
 
             String dnsTarget = signatureParameterMap.get("dns-target");
             if (dnsTarget != null) {

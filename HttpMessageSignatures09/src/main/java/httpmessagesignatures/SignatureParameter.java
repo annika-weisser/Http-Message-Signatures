@@ -16,6 +16,7 @@
 */
 package httpmessagesignatures;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -36,12 +37,11 @@ public class SignatureParameter {
      * @param signLabel Label of the signature.
      * @param coveredHeaders List of component IDs covered by the signature.
      */
-    public SignatureParameter(String algorithm, String keyId, Long created, String signLabel,
-            List<Component> coveredHeaders) {
+    public SignatureParameter(String algorithm, String keyId, String signLabel, List<Component> coveredHeaders) {
 
         this.algorithm = algorithm;
         this.keyId = keyId;
-        this.created = created;
+        created = Instant.now().getEpochSecond();
         nonce = null;
         this.signLabel = signLabel;
         this.coveredHeaders = coveredHeaders;
@@ -58,12 +58,12 @@ public class SignatureParameter {
      * @param coveredHeaders List of component IDs covered by the signature.
      * @throws IllegalArgumentException
      */
-    public SignatureParameter(String algorithm, String keyId, Long created, Long expires, String signLabel,
+    public SignatureParameter(String algorithm, String keyId, Long expires, String signLabel,
             List<Component> coveredHeaders) {
 
         this.algorithm = algorithm;
         this.keyId = keyId;
-        this.created = created;
+        created = Instant.now().getEpochSecond();
         nonce = null;
         this.signLabel = signLabel;
         this.coveredHeaders = coveredHeaders;
@@ -88,12 +88,12 @@ public class SignatureParameter {
      * @param coveredHeaders List of component IDs covered by the signature.
      * @throws IllegalArgumentException
      */
-    public SignatureParameter(String algorithm, String keyId, String nonce, Long created, Long expires,
-            String signLabel, List<Component> coveredHeaders) {
+    public SignatureParameter(String algorithm, String keyId, String nonce, Long expires, String signLabel,
+            List<Component> coveredHeaders) {
 
         this.algorithm = algorithm;
         this.keyId = keyId;
-        this.created = created;
+        created = Instant.now().getEpochSecond();
 
         this.signLabel = signLabel;
         this.coveredHeaders = coveredHeaders;
@@ -115,16 +115,15 @@ public class SignatureParameter {
      * @param algorithm Algorithm used for the signature.
      * @param keyId ID of the key used for the signature.
      * @param none Unique value against replay attack.
-     * @param created Time of signature creation.
      * @param signLabel Label of the signature.
      * @param coveredHeaders List of component IDs covered by the signature.
      */
-    public SignatureParameter(String algorithm, String keyId, String nonce, Long created, String signLabel,
+    public SignatureParameter(String algorithm, String keyId, String nonce, String signLabel,
             List<Component> coveredHeaders) {
 
         this.algorithm = algorithm;
         this.keyId = keyId;
-        this.created = created;
+        created = Instant.now().getEpochSecond();
 
         this.signLabel = signLabel;
         this.coveredHeaders = coveredHeaders;
@@ -190,6 +189,11 @@ public class SignatureParameter {
      */
     public long getCreated() {
         return created;
+    }
+
+    //for Verifying
+    protected void setCreated(long created) {
+        this.created = created;
     }
 
     /**

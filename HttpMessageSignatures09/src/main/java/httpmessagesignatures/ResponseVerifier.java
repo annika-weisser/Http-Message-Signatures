@@ -74,12 +74,12 @@ public class ResponseVerifier extends Verifier {
             if (signatureParameterMap.get("expires") != null) {
 
                 Long expires = Long.valueOf(signatureParameterMap.get("expires"));
-                params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel, coveredHeaders);
+                params = new SignatureParameter(algorithm, keyId, nonce, expires, signLabel, coveredHeaders);
 
             } else {
-                params = new SignatureParameter(algorithm, keyId, nonce, created, signLabel, coveredHeaders);
+                params = new SignatureParameter(algorithm, keyId, nonce, signLabel, coveredHeaders);
             }
-
+            params.setCreated(created);
             //Determine the verification key material for this signature.
             byte[] publicKey = null;
             for (KeyMap keyMap : keys) {

@@ -63,8 +63,8 @@ public class TestInvalidSignatures {
                 new Component("date"), new Component("@method", null, false), new Component("@path"),
                 new Component("@query"), new Component("@authority"), new Component("content-type"),
                 new Component("content-digest"), new Component("content-length"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b23", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b23",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 EntityUtils.toString(request.getEntity()));
@@ -112,8 +112,8 @@ public class TestInvalidSignatures {
         coveredHeaders.add(new Component("@query-params", parametersQux, false));
         coveredHeaders.add(new Component("@query-params", parametersParam, false));
 
-        SignatureParameter params = new SignatureParameter("hmac-sha256", "test-shared-secret",
-                Instant.now().getEpochSecond(), "sig-b26", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("hmac-sha256", "test-shared-secret", "sig-b26",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);

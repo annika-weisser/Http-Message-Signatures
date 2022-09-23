@@ -60,7 +60,7 @@ public class HttpMessageSignatureTest {
 
         List<Component> coveredHeaders = Arrays.asList();
         SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                "b3k2pp5k7z-50gnwp.yemd", Instant.now().getEpochSecond(), "sig-b21", coveredHeaders);
+                "b3k2pp5k7z-50gnwp.yemd", "sig-b21", coveredHeaders);
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 EntityUtils.toString(request.getEntity()));
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);
@@ -90,7 +90,7 @@ public class HttpMessageSignatureTest {
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"), new Component("content-digest"));
         Long created = Instant.now().getEpochSecond();
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", created, "sig-b22",
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b22",
                 coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
@@ -126,8 +126,8 @@ public class HttpMessageSignatureTest {
                 new Component("date"), new Component("@method", null, false), new Component("@path"),
                 new Component("@query"), new Component("@authority"), new Component("content-type"),
                 new Component("content-digest"), new Component("content-length"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b23", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b23",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 EntityUtils.toString(request.getEntity()));
@@ -159,8 +159,8 @@ public class HttpMessageSignatureTest {
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@status"), new Component("content-type"),
                 new Component("content-digest"), new Component("content-length"));
-        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256",
-                Instant.now().getEpochSecond(), "sig-b24", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", "sig-b24",
+                coveredHeaders);
 
         SignedHttpResponse signedResponse = SignedHttpMessageFactory.createSignedHttpResponse(response, params);
 
@@ -191,8 +191,8 @@ public class HttpMessageSignatureTest {
 
         List<Component> coveredHeaders = Arrays.asList(new Component("date", null, false),
                 new Component("@authority", null, false), new Component("content-type", null, false));
-        SignatureParameter params = new SignatureParameter("hmac-sha256", "test-shared-secret",
-                Instant.now().getEpochSecond(), "sig-b25", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("hmac-sha256", "test-shared-secret", "sig-b25",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, secret);
@@ -223,8 +223,7 @@ public class HttpMessageSignatureTest {
                 new Component("@method", null, false), new Component("@path", null, false),
                 new Component("@authority", null, false), new Component("content-type", null, false),
                 new Component("content-length", null, false));
-        SignatureParameter params = new SignatureParameter("ed25519", "test-key-ed25519",
-                Instant.now().getEpochSecond(), "sig-b26", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("ed25519", "test-key-ed25519", "sig-b26", coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);
@@ -258,7 +257,7 @@ public class HttpMessageSignatureTest {
                 new Component("@query"), new Component("@authority"), new Component("content-type"),
                 new Component("content-digest"), new Component("content-length"));
         SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), Instant.now().getEpochSecond() + 200, "sig-b23", coveredHeaders);
+                Instant.now().getEpochSecond() + 200, "sig-b23", coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 EntityUtils.toString(request.getEntity()));
@@ -284,8 +283,8 @@ public class HttpMessageSignatureTest {
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@status"), new Component("content-type"),
                 new Component("content-digest"), new Component("content-length"));
-        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", createValue,
-                createValue + 200, "sig-b24", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", createValue + 200,
+                "sig-b24", coveredHeaders);
 
         SignedHttpResponse signedResponse = SignedHttpMessageFactory.createSignedHttpResponse(response, params);
 
@@ -315,8 +314,7 @@ public class HttpMessageSignatureTest {
                 new Component("@method", null, false), new Component("@path", null, false),
                 new Component("@authority", null, false), new Component("content-type", null, false),
                 new Component("content-length", null, false));
-        SignatureParameter params = new SignatureParameter("ed25519", "test-key-ed25519",
-                Instant.now().getEpochSecond(), "sig-b26", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("ed25519", "test-key-ed25519", "sig-b26", coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
         signedRequest.setDnsTarget();
