@@ -68,16 +68,17 @@ public class ResponseVerifier extends Verifier {
             String algorithm = signatureParameterMap.get("alg");
             Long created = Long.parseLong(signatureParameterMap.get("created"));
             String nonce = signatureParameterMap.get("nonce");
-            String expiresStr = signatureParameterMap.get("expires");
-            Long expires = null;
-            if (signatureParameterMap.get("expires") != null) {
-                expires = Long.parseLong(expiresStr);
-            }
-
             String keyId = signatureParameterMap.get("keyid");
+            Long expires = null;
+            SignatureParameter params;
+            if (signatureParameterMap.get("expires") != null) {
 
-            SignatureParameter params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel,
-                    coveredHeaders);
+                expires = Long.valueOf(signatureParameterMap.get("expires"));
+                params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel, coveredHeaders);
+
+            } else {
+                params = new SignatureParameter(algorithm, keyId, nonce, created, signLabel, coveredHeaders);
+            }
 
             //Determine the verification key material for this signature.
             byte[] publicKey = null;

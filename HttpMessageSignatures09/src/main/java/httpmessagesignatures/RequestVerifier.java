@@ -71,16 +71,17 @@ public class RequestVerifier extends Verifier {
 
             String nonce = signatureParameterMap.get("nonce");
             Long expires = null;
-
+            String keyId = signatureParameterMap.get("keyid");
+            SignatureParameter params;
             if (signatureParameterMap.get("expires") != null) {
 
                 expires = Long.valueOf(signatureParameterMap.get("expires"));
+                params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel, coveredHeaders);
 
+            } else {
+                params = new SignatureParameter(algorithm, keyId, nonce, created, signLabel, coveredHeaders);
             }
-            String keyId = signatureParameterMap.get("keyid");
 
-            SignatureParameter params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel,
-                    coveredHeaders);
             String dnsTarget = signatureParameterMap.get("dns-target");
             if (dnsTarget != null) {
                 if (!isDnsTargetChanged(dnsTarget, host)) {

@@ -53,13 +53,13 @@ public class SignatureParameter {
     * @param algorithm Algorithm used for the signature.
      * @param keyId ID of the key used for the signature.
      * @param created Time of signature creation.
-      * @param expireTime at which the signature expires.
+      * @param expires at which the signature expires.
      * @param signLabel Label of the signature.
      * @param coveredHeaders List of component IDs covered by the signature.
      * @throws IllegalArgumentException
      */
-    public SignatureParameter(String algorithm, String keyId, Long created, Long expireTime, String signLabel,
-            List<Component> coveredHeaders) throws IllegalArgumentException {
+    public SignatureParameter(String algorithm, String keyId, Long created, Long expires, String signLabel,
+            List<Component> coveredHeaders) {
 
         this.algorithm = algorithm;
         this.keyId = keyId;
@@ -67,9 +67,9 @@ public class SignatureParameter {
         nonce = null;
         this.signLabel = signLabel;
         this.coveredHeaders = coveredHeaders;
-        if (expireTime != null) {
-            if ((expireTime > created)) {
-                this.expireTime = expireTime;
+        if (expires != null) {
+            if ((expires > created)) {
+                this.expires = expires;
             } else {
                 throw new IllegalArgumentException("expire time must be a time after created");
             }
@@ -83,13 +83,13 @@ public class SignatureParameter {
      * @param keyId ID of the key used for the signature.
      * @param nonce Unique value against replay attack.
      * @param created Time of signature creation.
-     * @param expireTime Time at which the signature expires.
+     * @param expires Time at which the signature expires.
      * @param signLabel Label of the signature.
      * @param coveredHeaders List of component IDs covered by the signature.
      * @throws IllegalArgumentException
      */
-    public SignatureParameter(String algorithm, String keyId, String nonce, Long created, Long expireTime,
-            String signLabel, List<Component> coveredHeaders) throws IllegalArgumentException {
+    public SignatureParameter(String algorithm, String keyId, String nonce, Long created, Long expires,
+            String signLabel, List<Component> coveredHeaders) {
 
         this.algorithm = algorithm;
         this.keyId = keyId;
@@ -97,9 +97,9 @@ public class SignatureParameter {
 
         this.signLabel = signLabel;
         this.coveredHeaders = coveredHeaders;
-        if (expireTime != null) {
-            if ((expireTime > created)) {
-                this.expireTime = expireTime;
+        if (expires != null) {
+            if ((expires > created)) {
+                this.expires = expires;
             } else {
                 throw new IllegalArgumentException("expire time must be a time after created");
             }
@@ -140,10 +140,10 @@ public class SignatureParameter {
      */
     private Long created;
     /**
-     * Optional: Expiration time as an sf-integer UNIX timestamp value.
+     * Optional: Expires time as an sf-integer UNIX timestamp value.
      * Indicates when the signature will expire.
      */
-    private Long expireTime;
+    private Long expires;
     /**
      * Optional: A random unique value generated for this signature.
      */
@@ -196,7 +196,7 @@ public class SignatureParameter {
      * @return the expires
      */
     public long getExpireTime() {
-        return expireTime;
+        return expires;
     }
 
     /**
@@ -227,8 +227,8 @@ public class SignatureParameter {
         String value = "";
         value = value + ";" + "created" + "=" + created;
 
-        if (expireTime != null) {
-            value = value + ";" + "expires" + "=" + expireTime;
+        if (expires != null) {
+            value = value + ";" + "expires" + "=" + expires;
         }
 
         value = value + ";" + "keyid" + "=" + "\"" + keyId + "\"" + ";" + "alg" + "=" + "\"" + algorithm + "\"";
