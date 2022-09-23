@@ -69,11 +69,11 @@ public class ResponseVerifier extends Verifier {
             Long created = Long.parseLong(signatureParameterMap.get("created"));
             String nonce = signatureParameterMap.get("nonce");
             String keyId = signatureParameterMap.get("keyid");
-            Long expires = null;
+
             SignatureParameter params;
             if (signatureParameterMap.get("expires") != null) {
 
-                expires = Long.valueOf(signatureParameterMap.get("expires"));
+                Long expires = Long.valueOf(signatureParameterMap.get("expires"));
                 params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel, coveredHeaders);
 
             } else {
