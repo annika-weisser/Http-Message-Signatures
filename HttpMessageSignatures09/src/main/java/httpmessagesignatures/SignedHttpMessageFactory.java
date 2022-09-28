@@ -78,6 +78,28 @@ public class SignedHttpMessageFactory {
     }
 
     /**
+     * In case that the request contains a message body that is included in the signature.
+     * @param request
+     * @param messageBody
+     * @return signedRequest
+     * @throws URISyntaxException
+     */
+    public static SignedHttpRequest createSignedHttpRequest(HttpRequest request, String messageBody)
+            throws URISyntaxException {
+
+        SignedHttpRequest signedRequest = new SignedHttpRequest(request.getRequestLine().getMethod(),
+                request.getRequestLine().getUri(), null, messageBody);
+
+        //Add all headers of the request to be signed to the signed HTTP request.
+        HeaderIterator headerIterator = request.headerIterator();
+        while (headerIterator.hasNext()) {
+            signedRequest.addHeader(headerIterator.nextHeader());
+        }
+
+        return signedRequest;
+    }
+
+    /**
      * This method is used to verify a request.
      * In this case, the signature parameters are extracted from the signature input header.
      * @param request
