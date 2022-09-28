@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signature.components;
 
 /**
  * KeyMap Class for storing various public keys for verifying an HTTP message.

@@ -48,6 +48,9 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import exceptions.NoSuchSignatureException;
+import signature.components.Component;
+import signature.components.SHAEncoder;
+import signaturebase.HttpFieldTransformer;
 
 /**
  * Verifier performs the verification of a HTTP message.

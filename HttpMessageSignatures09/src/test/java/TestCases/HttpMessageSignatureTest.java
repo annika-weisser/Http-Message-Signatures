@@ -31,13 +31,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
-import httpmessagesignatures.Component;
 import httpmessagesignatures.HttpMessageSignerFacade;
-import httpmessagesignatures.KeyMap;
-import httpmessagesignatures.SignatureParameter;
 import httpmessagesignatures.SignedHttpMessageFactory;
-import httpmessagesignatures.SignedHttpRequest;
-import httpmessagesignatures.SignedHttpResponse;
+import signature.components.Component;
+import signature.components.KeyMap;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
+import signature.messages.SignedHttpResponse;
 
 /**
  * Contains the test cases from the HTTP Message Signatures Draft Version 9 (see Section B.2. Test Cases).

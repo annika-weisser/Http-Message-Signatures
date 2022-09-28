@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signaturebase;
 
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -28,6 +28,11 @@ import org.apache.http.HeaderElement;
 import org.apache.http.HttpRequest;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
+
+import signature.components.Component;
+import signature.components.SHAEncoder;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpMessage;
 
 /**
  * SignatureBaseCreator for creating the signature base for signing/verifying an HTTP message.
@@ -45,7 +50,7 @@ public abstract class SignaturBaseCreator {
     /** signaturebase as byte array */
     protected byte[] signaturebase;
     /** signature-input */
-    protected String signatureInput;
+    public String signatureInput;
     /** message to be signed/verified */
     protected SignedHttpMessage message;
 
@@ -80,7 +85,7 @@ public abstract class SignaturBaseCreator {
     /**
      * @return Signaturbase as byte array
      */
-    protected byte[] getSignaturebase() {
+    public byte[] getSignaturebase() {
         return signaturebase;
     }
 

@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signature.messages;
 
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +28,8 @@ import org.apache.http.ReasonPhraseCatalog;
 import org.apache.http.StatusLine;
 import org.apache.http.message.BasicStatusLine;
 import org.apache.http.util.Args;
+
+import signature.components.SignatureParameter;
 
 /**
  * SignedHttpResponse contains attributes of a signed response.
@@ -235,7 +237,7 @@ public class SignedHttpResponse extends SignedHttpMessage implements HttpRespons
     }
 
     /** (non-Javadoc)
-     * @see httpmessagesignatures.SignedHttpMessage#setMessageBody(java.lang.String)
+     * @see signature.messages.SignedHttpMessage#setMessageBody(java.lang.String)
      */
     @Override
     void setMessageBody(String messageBody) {
@@ -244,11 +246,11 @@ public class SignedHttpResponse extends SignedHttpMessage implements HttpRespons
     }
 
     /** (non-Javadoc)
-     * @see httpmessagesignatures.SignedHttpMessage#getMessageBody()
+     * @see signature.messages.SignedHttpMessage#getMessageBody()
      */
     @Override
-    String getMessageBody() {
-        // TODO Auto-generated method stub
+    public String getMessageBody() {
+
         return messageBody;
     }
 

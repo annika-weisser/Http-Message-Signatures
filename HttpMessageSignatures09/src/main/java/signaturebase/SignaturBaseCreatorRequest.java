@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signaturebase;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,6 +23,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+
+import signature.components.Component;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
 
 /**
  * Performs specific steps for creating a SignatureBase for a request.

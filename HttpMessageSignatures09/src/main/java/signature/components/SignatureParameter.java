@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signature.components;
 
 import java.time.Instant;
 import java.util.List;
@@ -192,7 +192,7 @@ public class SignatureParameter {
     }
 
     //for Verifying
-    protected void setCreated(long created) {
+    public void setCreated(long created) {
         this.created = created;
     }
 
@@ -227,7 +227,7 @@ public class SignatureParameter {
     /**
      * @return canonicalized value of the parameters
      */
-    protected String createCanonicalizedValue() {
+    public String createCanonicalizedValue() {
         String value = "";
         value = value + ";" + "created" + "=" + created;
 
@@ -258,7 +258,7 @@ public class SignatureParameter {
     /**
      * @param dnsTarget the dnsTarget to set
      */
-    protected void setDnsTarget(String dnsTarget) {
+    public void setDnsTarget(String dnsTarget) {
         this.dnsTarget = dnsTarget;
     }
 

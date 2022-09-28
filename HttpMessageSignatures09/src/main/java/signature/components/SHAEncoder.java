@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signature.components;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

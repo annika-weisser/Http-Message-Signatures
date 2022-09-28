@@ -24,6 +24,10 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
+import signature.messages.SignedHttpResponse;
+
 /**
  * Factory for creating signed requests/response.
  *

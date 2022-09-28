@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signature.messages;
 
 import java.net.InetAddress;
 import java.net.URI;
@@ -25,6 +25,8 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpVersion;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.message.BasicRequestLine;
+
+import signature.components.SignatureParameter;
 
 /**
  * SignedHttpRequest contains attributes of a signed request.
@@ -140,7 +142,7 @@ public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest 
      * return the messageBody
      */
     @Override
-    String getMessageBody() {
+    public String getMessageBody() {
 
         return messageBody;
     }

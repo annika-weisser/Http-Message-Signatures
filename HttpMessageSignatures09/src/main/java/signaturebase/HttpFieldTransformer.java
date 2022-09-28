@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signaturebase;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,6 +24,8 @@ import java.util.Map;
 import org.apache.http.Header;
 import org.apache.http.HeaderIterator;
 import org.apache.http.HttpMessage;
+
+import signature.components.Component;
 
 /**
  * Transformer class for preparation of the header fields for inclusion in the signature base
@@ -80,7 +82,7 @@ public class HttpFieldTransformer {
      * @return Message with prepared header field names
      */
 
-    protected static HttpMessage canonicalizeHTTPHeader(HttpMessage message) {
+    public static HttpMessage canonicalizeHTTPHeader(HttpMessage message) {
         HashMap<String, String> headermap = new HashMap<>();
         HeaderIterator headerIteratorCase = message.headerIterator();
 

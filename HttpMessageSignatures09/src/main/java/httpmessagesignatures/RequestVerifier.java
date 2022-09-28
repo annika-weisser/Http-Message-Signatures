@@ -25,6 +25,13 @@ import java.util.Map;
 
 import org.apache.http.Header;
 
+import signature.components.Component;
+import signature.components.KeyMap;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
+import signaturebase.SignaturBaseCreator;
+import signaturebase.SignaturBaseCreatorRequest;
+
 /**
  * Verifier performs the verification of a request.
  *

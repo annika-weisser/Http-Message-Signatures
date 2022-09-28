@@ -14,9 +14,11 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signature.messages;
 
 import org.apache.http.message.AbstractHttpMessage;
+
+import signature.components.SignatureParameter;
 
 /**
  * SignedHttpMessage contains attributes of a signed message.
@@ -85,14 +87,14 @@ public abstract class SignedHttpMessage extends AbstractHttpMessage {
     /**
      * @param signatureBase
      */
-    protected void setSignatureBase(String signatureBase) {
+    public void setSignatureBase(String signatureBase) {
         this.signatureBase = signatureBase;
     }
 
     /**
      * @return the signatureBase
      */
-    protected String getSignatureBase() {
+    public String getSignatureBase() {
         return signatureBase;
     }
 
@@ -104,6 +106,6 @@ public abstract class SignedHttpMessage extends AbstractHttpMessage {
     /**
      * @return the messageBody
      */
-    abstract String getMessageBody();
+    public abstract String getMessageBody();
 
 }

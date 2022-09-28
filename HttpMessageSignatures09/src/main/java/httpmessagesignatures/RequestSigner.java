@@ -31,6 +31,12 @@ import java.util.List;
 import org.apache.http.Header;
 
 import exceptions.AmbiguousSignatureLableException;
+import signature.components.Component;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
+import signaturebase.HttpFieldTransformer;
+import signaturebase.SignaturBaseCreator;
+import signaturebase.SignaturBaseCreatorRequest;
 
 /**
  * Signer performs the signing of a request.
