@@ -23,6 +23,13 @@ import java.util.Map;
 
 import org.apache.http.Header;
 
+import signature.components.Component;
+import signature.components.KeyMap;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpResponse;
+import signaturebase.SignaturBaseCreator;
+import signaturebase.SignaturBaseCreatorResponse;
+
 /**
  * Verifier performs the verification of a response.
  *
@@ -57,7 +64,7 @@ public class ResponseVerifier extends Verifier {
             sigLabels.add(signLabel);
 
             // Section 3.2 step 2 anaylize Signatur-Input
-            coveredHeaders = getCoveredHeaders(signatureInputHeader, signLabel);
+            coveredHeaders = getCoveredHeaders(signatureInputHeader);
             Map<String, String> signatureParameterMap = extractSignatureParameter(signatureInputHeader, signLabel);
 
             // get Signature as ByteArray
@@ -68,17 +75,18 @@ public class ResponseVerifier extends Verifier {
             String algorithm = signatureParameterMap.get("alg");
             Long created = Long.parseLong(signatureParameterMap.get("created"));
             String nonce = signatureParameterMap.get("nonce");
-            String expiresStr = signatureParameterMap.get("expires");
-            Long expires = null;
-            if (signatureParameterMap.get("expires") != null) {
-                expires = Long.parseLong(expiresStr);
-            }
-
             String keyId = signatureParameterMap.get("keyid");
 
-            SignatureParameter params = new SignatureParameter(algorithm, keyId, nonce, created, expires, signLabel,
-                    coveredHeaders);
+            SignatureParameter params;
+            if (signatureParameterMap.get("expires") != null) {
 
+                Long expires = Long.valueOf(signatureParameterMap.get("expires"));
+                params = new SignatureParameter(algorithm, keyId, nonce, expires, signLabel, coveredHeaders);
+
+            } else {
+                params = new SignatureParameter(algorithm, keyId, nonce, signLabel, coveredHeaders);
+            }
+            params.setCreated(created);
             //Determine the verification key material for this signature.
             byte[] publicKey = null;
             for (KeyMap keyMap : keys) {

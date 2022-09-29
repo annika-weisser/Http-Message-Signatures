@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,14 +29,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
-import httpmessagesignatures.Component;
 import httpmessagesignatures.HttpMessageSignerFacade;
-import httpmessagesignatures.KeyMap;
-import httpmessagesignatures.SHAEncoder;
-import httpmessagesignatures.SignatureParameter;
 import httpmessagesignatures.SignedHttpMessageFactory;
-import httpmessagesignatures.SignedHttpRequest;
-import httpmessagesignatures.SignedHttpResponse;
+import signature.components.Component;
+import signature.components.KeyMap;
+import signature.components.SHAEncoder;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
+import signature.messages.SignedHttpResponse;
 
 /**
  * Test cases for signing the message body (based on draft 10).
@@ -79,8 +78,8 @@ public class TestMessageBody {
         byte[] privateKey = KeyProvider.getPrivateEccKey();
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"), new Component("Content-Digest"));
-        Long created = Instant.now().getEpochSecond();
-        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", created, "sig-b22",
+
+        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", "sig-b22",
                 coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
@@ -104,14 +103,14 @@ public class TestMessageBody {
         byte[] privateKey = KeyProvider.getPrivateEccKey();
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"), new Component("Content-Digest"));
-        Long created = Instant.now().getEpochSecond();
-        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", created, "sig-b22",
+
+        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", "sig-b22",
                 coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 EntityUtils.toString(request.getEntity()));
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);
-        signedRequest.messageBody = "{\"bye\": \"world\"}";
+        signedRequest.setMessageBody("{\"bye\": \"world\"}");
 
         byte[] publicKey = KeyProvider.getPublicEccKey();
         List<KeyMap> listeKeys = new ArrayList<>();
@@ -130,8 +129,8 @@ public class TestMessageBody {
         byte[] privateKey = KeyProvider.getPrivateEccKey();
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"), new Component("content-digest"));
-        Long created = Instant.now().getEpochSecond();
-        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", created, "sig-b22",
+
+        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", "sig-b22",
                 coveredHeaders);
 
         SignedHttpResponse signedResponse = SignedHttpMessageFactory.createSignedHttpResponse(response, params);
@@ -153,15 +152,15 @@ public class TestMessageBody {
         byte[] privateKey = KeyProvider.getPrivateEccKey();
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@status"), new Component("content-digest"));
-        Long created = Instant.now().getEpochSecond();
-        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", created, "sig-b22",
+
+        SignatureParameter params = new SignatureParameter("ecdsa-p256-sha256", "test-key-ecc-p256", "sig-b22",
                 coveredHeaders);
 
         SignedHttpResponse signedResponse = SignedHttpMessageFactory.createSignedHttpResponse(response, params);
 
         signedResponse = HttpMessageSignerFacade.signResponse(signedResponse, privateKey);
 
-        signedResponse.messageBody = "{\"bye\": \"world\"}";
+        signedResponse.setMessageBody("{\"bye\": \"world\"}");
         byte[] publicKey = KeyProvider.getPublicEccKey();
         List<KeyMap> listeKeys = new ArrayList<>();
         KeyMap map = new KeyMap("test-key-ecc-p256", publicKey);

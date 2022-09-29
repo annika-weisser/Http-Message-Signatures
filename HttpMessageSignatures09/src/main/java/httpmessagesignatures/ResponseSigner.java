@@ -31,6 +31,12 @@ import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 
 import exceptions.AmbiguousSignatureLableException;
+import signature.components.Component;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpResponse;
+import signaturebase.HttpFieldTransformer;
+import signaturebase.SignaturBaseCreator;
+import signaturebase.SignaturBaseCreatorResponse;
 
 /**
  * Signer performs the signing of a response.

@@ -14,8 +14,9 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signature.components;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -29,121 +30,15 @@ import java.util.List;
 public class SignatureParameter {
 
     /**
-     * Constructor.
-     * @param algorithm Algorithm used for the signature.
-     * @param keyId ID of the key used for the signature.
-     * @param created Time of signature creation.
-     * @param signLabel Label of the signature.
-     * @param coveredHeaders List of component IDs covered by the signature.
-     */
-    public SignatureParameter(String algorithm, String keyId, Long created, String signLabel,
-            List<Component> coveredHeaders) {
-
-        this.algorithm = algorithm;
-        this.keyId = keyId;
-        this.created = created;
-        nonce = null;
-        this.signLabel = signLabel;
-        this.coveredHeaders = coveredHeaders;
-
-    }
-
-    /**
-     *
-    * @param algorithm Algorithm used for the signature.
-     * @param keyId ID of the key used for the signature.
-     * @param created Time of signature creation.
-      * @param expireTime at which the signature expires.
-     * @param signLabel Label of the signature.
-     * @param coveredHeaders List of component IDs covered by the signature.
-     * @throws IllegalArgumentException
-     */
-    public SignatureParameter(String algorithm, String keyId, Long created, Long expireTime, String signLabel,
-            List<Component> coveredHeaders) throws IllegalArgumentException {
-
-        this.algorithm = algorithm;
-        this.keyId = keyId;
-        this.created = created;
-        nonce = null;
-        this.signLabel = signLabel;
-        this.coveredHeaders = coveredHeaders;
-        if (expireTime != null) {
-            if ((expireTime > created)) {
-                this.expireTime = expireTime;
-            } else {
-                throw new IllegalArgumentException("expire time must be a time after created");
-            }
-        }
-
-    }
-
-    /**
-     * Constructor.
-     * @param algorithm Algorithm used for the signature.
-     * @param keyId ID of the key used for the signature.
-     * @param nonce Unique value against replay attack.
-     * @param created Time of signature creation.
-     * @param expireTime Time at which the signature expires.
-     * @param signLabel Label of the signature.
-     * @param coveredHeaders List of component IDs covered by the signature.
-     * @throws IllegalArgumentException
-     */
-    public SignatureParameter(String algorithm, String keyId, String nonce, Long created, Long expireTime,
-            String signLabel, List<Component> coveredHeaders) throws IllegalArgumentException {
-
-        this.algorithm = algorithm;
-        this.keyId = keyId;
-        this.created = created;
-
-        this.signLabel = signLabel;
-        this.coveredHeaders = coveredHeaders;
-        if (expireTime != null) {
-            if ((expireTime > created)) {
-                this.expireTime = expireTime;
-            } else {
-                throw new IllegalArgumentException("expire time must be a time after created");
-            }
-        }
-
-        if (nonce != null) {
-            this.nonce = nonce;
-        }
-    }
-
-    /**
-     * Constructor.
-     * @param algorithm Algorithm used for the signature.
-     * @param keyId ID of the key used for the signature.
-     * @param none Unique value against replay attack.
-     * @param created Time of signature creation.
-     * @param signLabel Label of the signature.
-     * @param coveredHeaders List of component IDs covered by the signature.
-     */
-    public SignatureParameter(String algorithm, String keyId, String nonce, Long created, String signLabel,
-            List<Component> coveredHeaders) {
-
-        this.algorithm = algorithm;
-        this.keyId = keyId;
-        this.created = created;
-
-        this.signLabel = signLabel;
-        this.coveredHeaders = coveredHeaders;
-
-        if (nonce != null) {
-            this.nonce = nonce;
-        }
-    }
-
-    /**
      * Creation time as an sf-integer UNIX timestamp value.
      * Specifies the time the signature was created.
      */
     private Long created;
     /**
-     * Optional: Expiration time as an sf-integer UNIX timestamp value.
+     * Optional: Expires time as an sf-integer UNIX timestamp value.
      * Indicates when the signature will expire.
      */
-    private Long expireTime;
+    private Long expires;
     /**
      * Optional: A random unique value generated for this signature.
      */
@@ -172,6 +67,110 @@ public class SignatureParameter {
     private String dnsTarget;
 
     /**
+     * Constructor.
+     * @param algorithm Algorithm used for the signature.
+     * @param keyId ID of the key used for the signature.
+     * @param created Time of signature creation.
+     * @param signLabel Label of the signature.
+     * @param coveredHeaders List of component IDs covered by the signature.
+     */
+    public SignatureParameter(String algorithm, String keyId, String signLabel, List<Component> coveredHeaders) {
+
+        this.algorithm = algorithm;
+        this.keyId = keyId;
+        created = Instant.now().getEpochSecond();
+        nonce = null;
+        this.signLabel = signLabel;
+        this.coveredHeaders = coveredHeaders;
+
+    }
+
+    /**
+     *
+    * @param algorithm Algorithm used for the signature.
+     * @param keyId ID of the key used for the signature.
+     * @param created Time of signature creation.
+      * @param expires at which the signature expires.
+     * @param signLabel Label of the signature.
+     * @param coveredHeaders List of component IDs covered by the signature.
+     * @throws IllegalArgumentException
+     */
+    public SignatureParameter(String algorithm, String keyId, Long expires, String signLabel,
+            List<Component> coveredHeaders) {
+
+        this.algorithm = algorithm;
+        this.keyId = keyId;
+        created = Instant.now().getEpochSecond();
+        nonce = null;
+        this.signLabel = signLabel;
+        this.coveredHeaders = coveredHeaders;
+        if (expires != null) {
+            if ((expires > created)) {
+                this.expires = expires;
+            } else {
+                throw new IllegalArgumentException("expire time must be a time after created");
+            }
+        }
+
+    }
+
+    /**
+     * Constructor.
+     * @param algorithm Algorithm used for the signature.
+     * @param keyId ID of the key used for the signature.
+     * @param nonce Unique value against replay attack.
+     * @param created Time of signature creation.
+     * @param expires Time at which the signature expires.
+     * @param signLabel Label of the signature.
+     * @param coveredHeaders List of component IDs covered by the signature.
+     * @throws IllegalArgumentException
+     */
+    public SignatureParameter(String algorithm, String keyId, String nonce, Long expires, String signLabel,
+            List<Component> coveredHeaders) {
+
+        this.algorithm = algorithm;
+        this.keyId = keyId;
+        created = Instant.now().getEpochSecond();
+
+        this.signLabel = signLabel;
+        this.coveredHeaders = coveredHeaders;
+        if (expires != null) {
+            if ((expires > created)) {
+                this.expires = expires;
+            } else {
+                throw new IllegalArgumentException("expire time must be a time after created");
+            }
+        }
+
+        if (nonce != null) {
+            this.nonce = nonce;
+        }
+    }
+
+    /**
+     * Constructor.
+     * @param algorithm Algorithm used for the signature.
+     * @param keyId ID of the key used for the signature.
+     * @param none Unique value against replay attack.
+     * @param signLabel Label of the signature.
+     * @param coveredHeaders List of component IDs covered by the signature.
+     */
+    public SignatureParameter(String algorithm, String keyId, String nonce, String signLabel,
+            List<Component> coveredHeaders) {
+
+        this.algorithm = algorithm;
+        this.keyId = keyId;
+        created = Instant.now().getEpochSecond();
+
+        this.signLabel = signLabel;
+        this.coveredHeaders = coveredHeaders;
+
+        if (nonce != null) {
+            this.nonce = nonce;
+        }
+    }
+
+    /**
      * @return the signLabel
      */
     public String getSignLabel() {
@@ -192,11 +191,16 @@ public class SignatureParameter {
         return created;
     }
 
+    //for Verifying
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
     /**
      * @return the expires
      */
     public long getExpireTime() {
-        return expireTime;
+        return expires;
     }
 
     /**
@@ -223,12 +227,12 @@ public class SignatureParameter {
     /**
      * @return canonicalized value of the parameters
      */
-    protected String createCanonicalizedValue() {
+    public String createCanonicalizedValue() {
         String value = "";
         value = value + ";" + "created" + "=" + created;
 
-        if (expireTime != null) {
-            value = value + ";" + "expires" + "=" + expireTime;
+        if (expires != null) {
+            value = value + ";" + "expires" + "=" + expires;
         }
 
         value = value + ";" + "keyid" + "=" + "\"" + keyId + "\"" + ";" + "alg" + "=" + "\"" + algorithm + "\"";
@@ -254,7 +258,8 @@ public class SignatureParameter {
     /**
      * @param dnsTarget the dnsTarget to set
      */
-    protected void setDnsTarget(String dnsTarget) {
+    public void setDnsTarget(String dnsTarget) {
+
         this.dnsTarget = dnsTarget;
     }
 

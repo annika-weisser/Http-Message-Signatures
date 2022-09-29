@@ -48,6 +48,9 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import exceptions.NoSuchSignatureException;
+import signature.components.Component;
+import signature.components.SHAEncoder;
+import signaturebase.HttpFieldTransformer;
 
 /**
  * Verifier performs the verification of a HTTP message.
@@ -280,10 +283,9 @@ public abstract class Verifier {
     /**
      * Extract the ids of the covered components from the signature input header.
      * @param signatureInput
-     * @param signatureLabel
      * @return List of coveredHeaders.
      */
-    protected static List<Component> getCoveredHeaders(Header signatureInput, String signatureLabel) {
+    protected static List<Component> getCoveredHeaders(Header signatureInput) {
         List<Component> coveredHeaders = new ArrayList<>();
 
         String value = signatureInput.getValue();

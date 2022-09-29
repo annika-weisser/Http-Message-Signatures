@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signature.components;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

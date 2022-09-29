@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,12 +32,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
-import httpmessagesignatures.Component;
 import httpmessagesignatures.HttpMessageSignerFacade;
-import httpmessagesignatures.KeyMap;
-import httpmessagesignatures.SignatureParameter;
 import httpmessagesignatures.SignedHttpMessageFactory;
-import httpmessagesignatures.SignedHttpRequest;
+import signature.components.Component;
+import signature.components.KeyMap;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
 
 /**
  * Test cases check whether the signature remains valid when performing secure transformation of the signed message.
@@ -76,8 +75,8 @@ public class TestSafeTransformation {
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"),
                 new Component("content-type", null, false), new Component("host"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b22", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b22",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 request.getEntity().getContent().toString());
@@ -103,8 +102,8 @@ public class TestSafeTransformation {
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"), new Component("host", null, false),
                 new Component("date"), new Component("example", null, false));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b22", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b22",
+                coveredHeaders);
 
         request.addHeader("Date", "Tue, 21 Apr 2021 02:07:55 GMT");
         request.addHeader("Example", "en=\"Applepie\"");
@@ -133,8 +132,8 @@ public class TestSafeTransformation {
         HttpPost request = getTestRequest();
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"), new Component("host"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b22", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b22",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
 
@@ -162,8 +161,8 @@ public class TestSafeTransformation {
         byte[] privateKey = KeyProvider.getRsaPssPrivateKey();
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@scheme"), new Component("content-digest"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b22", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b22",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 EntityUtils.toString(request.getEntity()));
@@ -191,8 +190,8 @@ public class TestSafeTransformation {
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"),
                 new Component("content-type", null, false), new Component("host"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b22", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b22",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);
@@ -220,8 +219,8 @@ public class TestSafeTransformation {
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"),
                 new Component("content-type", null, false), new Component("host"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b22", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b22",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);
@@ -247,8 +246,8 @@ public class TestSafeTransformation {
         byte[] privateKey = KeyProvider.getRsaPssPrivateKey();
 
         List<Component> coveredHeaders = Arrays.asList(new Component("@authority"), new Component("content-type"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b22", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b22",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
 

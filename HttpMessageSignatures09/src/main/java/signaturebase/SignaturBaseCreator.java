@@ -14,7 +14,7 @@
 * is subject to license terms.
 *
 */
-package httpmessagesignatures;
+package signaturebase;
 
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -29,6 +29,11 @@ import org.apache.http.HttpRequest;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
 
+import signature.components.Component;
+import signature.components.SHAEncoder;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpMessage;
+
 /**
  * SignatureBaseCreator for creating the signature base for signing/verifying an HTTP message.
  *
@@ -39,13 +44,13 @@ import org.apache.http.client.utils.URIBuilder;
 public abstract class SignaturBaseCreator {
 
     /** list of header identifiers of the headers covered by the signature */
-    protected List<Component> coveredHeaders = null;
+    protected List<Component> coveredHeaders;
     /** parameters associated with the signature */
     protected SignatureParameter params;
     /** signaturebase as byte array */
     protected byte[] signaturebase;
     /** signature-input */
-    protected String signatureInput;
+    public String signatureInput;
     /** message to be signed/verified */
     protected SignedHttpMessage message;
 
@@ -53,7 +58,7 @@ public abstract class SignaturBaseCreator {
         this.message = message;
     }
 
-    protected abstract void create() throws Exception;
+    protected abstract void create() throws URISyntaxException, NoSuchAlgorithmException;
 
     /**
      * Extract the query parameters from the URI.
@@ -80,7 +85,7 @@ public abstract class SignaturBaseCreator {
     /**
      * @return Signaturbase as byte array
      */
-    protected byte[] getSignaturebase() {
+    public byte[] getSignaturebase() {
         return signaturebase;
     }
 
@@ -92,7 +97,7 @@ public abstract class SignaturBaseCreator {
      * @return Returns the bytes of the signature base
      * @throws NoSuchAlgorithmException
      */
-    public byte[] createSignatureBaseForMessage(SignedHttpMessage message, SignatureParameter sigparams)
+    protected byte[] createSignatureBaseForMessage(SignedHttpMessage message, SignatureParameter sigparams)
             throws NoSuchAlgorithmException {
         this.message = message;
 

@@ -27,6 +27,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 import exceptions.AmbiguousSignatureLableException;
+import signature.components.KeyMap;
+import signature.messages.SignedHttpRequest;
+import signature.messages.SignedHttpResponse;
 
 /**
  * Facade class for verifying and signing request and response messages.
@@ -36,6 +39,11 @@ import exceptions.AmbiguousSignatureLableException;
  * @created 15.03.2022
  */
 public class HttpMessageSignerFacade {
+
+    private HttpMessageSignerFacade() {
+
+    }
+
     /**
     *@return Returns signed Request.
      * @throws URISyntaxException

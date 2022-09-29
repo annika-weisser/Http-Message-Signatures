@@ -30,12 +30,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
-import httpmessagesignatures.Component;
 import httpmessagesignatures.HttpMessageSignerFacade;
-import httpmessagesignatures.KeyMap;
-import httpmessagesignatures.SignatureParameter;
 import httpmessagesignatures.SignedHttpMessageFactory;
-import httpmessagesignatures.SignedHttpRequest;
+import signature.components.Component;
+import signature.components.KeyMap;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
 
 /**
  * Clas contains test cases for structure header fields.
@@ -63,8 +63,8 @@ public class TestStructureFields {
                 new Component("date"), new Component("@method", null, false), new Component("@path"),
                 new Component("@query"), new Component("@authority"), new Component("content-type"),
                 new Component("content-digest"), new Component("content-length"));
-        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss",
-                Instant.now().getEpochSecond(), "sig-b23", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("rsa-pss-sha512", "test-key-rsa-pss", "sig-b23",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 EntityUtils.toString(request.getEntity()));

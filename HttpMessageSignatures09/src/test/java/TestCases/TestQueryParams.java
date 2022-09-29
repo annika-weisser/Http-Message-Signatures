@@ -19,7 +19,6 @@ package TestCases;
 import static org.junit.Assert.assertTrue;
 
 import java.net.URI;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,12 +29,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.Test;
 
-import httpmessagesignatures.Component;
 import httpmessagesignatures.HttpMessageSignerFacade;
-import httpmessagesignatures.KeyMap;
-import httpmessagesignatures.SignatureParameter;
 import httpmessagesignatures.SignedHttpMessageFactory;
-import httpmessagesignatures.SignedHttpRequest;
+import signature.components.Component;
+import signature.components.KeyMap;
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
 
 /**
  * Test cases check the signing of the query params (based on Draft 9).
@@ -69,8 +68,8 @@ public class TestQueryParams {
         coveredHeaders.add(new Component("@query-params", parametersQux, false));
         coveredHeaders.add(new Component("@query-params", parametersParam, false));
 
-        SignatureParameter params = new SignatureParameter("hmac-sha256", "test-shared-secret",
-                Instant.now().getEpochSecond(), "sig-b26", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("hmac-sha256", "test-shared-secret", "sig-b26",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);
@@ -109,8 +108,8 @@ public class TestQueryParams {
         coveredHeaders.add(new Component("@query-params", parametersParam, false));
         coveredHeaders.add(new Component("content-length"));
 
-        SignatureParameter params = new SignatureParameter("hmac-sha256", "test-key-ed25519",
-                Instant.now().getEpochSecond(), "sig-b26", coveredHeaders);
+        SignatureParameter params = new SignatureParameter("hmac-sha256", "test-key-ed25519", "sig-b26",
+                coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);

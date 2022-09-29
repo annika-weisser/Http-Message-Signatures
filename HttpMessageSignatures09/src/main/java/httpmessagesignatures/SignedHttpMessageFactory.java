@@ -24,6 +24,10 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
+import signature.components.SignatureParameter;
+import signature.messages.SignedHttpRequest;
+import signature.messages.SignedHttpResponse;
+
 /**
  * Factory for creating signed requests/response.
  *
@@ -31,7 +35,11 @@ import org.apache.http.util.EntityUtils;
  * @company Koerber Pharma Software GmbH
  * @created 23.05.2022
  */
-public class SignedHttpMessageFactory {
+public abstract class SignedHttpMessageFactory {
+
+    private SignedHttpMessageFactory() {
+
+    }
 
     /**
      * @param request
@@ -67,6 +75,28 @@ public class SignedHttpMessageFactory {
 
         SignedHttpRequest signedRequest = new SignedHttpRequest(request.getRequestLine().getMethod(),
                 request.getRequestLine().getUri(), signatureParams, messageBody);
+
+        //Add all headers of the request to be signed to the signed HTTP request.
+        HeaderIterator headerIterator = request.headerIterator();
+        while (headerIterator.hasNext()) {
+            signedRequest.addHeader(headerIterator.nextHeader());
+        }
+
+        return signedRequest;
+    }
+
+    /**
+     * In case that the request contains a message body that is included in the signature.
+     * @param request
+     * @param messageBody
+     * @return signedRequest
+     * @throws URISyntaxException
+     */
+    public static SignedHttpRequest createSignedHttpRequest(HttpRequest request, String messageBody)
+            throws URISyntaxException {
+
+        SignedHttpRequest signedRequest = new SignedHttpRequest(request.getRequestLine().getMethod(),
+                request.getRequestLine().getUri(), null, messageBody);
 
         //Add all headers of the request to be signed to the signed HTTP request.
         HeaderIterator headerIterator = request.headerIterator();
@@ -171,4 +201,5 @@ public class SignedHttpMessageFactory {
 
         return signedResponse;
     }
+
 }
