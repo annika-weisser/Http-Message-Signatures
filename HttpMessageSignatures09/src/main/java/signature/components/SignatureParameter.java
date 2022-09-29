@@ -30,6 +30,43 @@ import java.util.List;
 public class SignatureParameter {
 
     /**
+     * Creation time as an sf-integer UNIX timestamp value.
+     * Specifies the time the signature was created.
+     */
+    private Long created;
+    /**
+     * Optional: Expires time as an sf-integer UNIX timestamp value.
+     * Indicates when the signature will expire.
+     */
+    private Long expires;
+    /**
+     * Optional: A random unique value generated for this signature.
+     */
+    private String nonce = "";
+    /**
+     * The algorithm used for the HTTP message signature.
+     */
+    private String algorithm;
+    /**
+     * The identifier for the key material.
+     */
+    private String keyId;
+
+    /**
+     * Label of the signature.
+     */
+    private String signLabel;
+    /**
+     * List of component IDs covered by the signature.
+     */
+    private List<Component> coveredHeaders;
+
+    /**
+     * dnsTarget contains target IP-address.
+     */
+    private String dnsTarget;
+
+    /**
      * Constructor.
      * @param algorithm Algorithm used for the signature.
      * @param keyId ID of the key used for the signature.
@@ -132,43 +169,6 @@ public class SignatureParameter {
             this.nonce = nonce;
         }
     }
-
-    /**
-     * Creation time as an sf-integer UNIX timestamp value.
-     * Specifies the time the signature was created.
-     */
-    private Long created;
-    /**
-     * Optional: Expires time as an sf-integer UNIX timestamp value.
-     * Indicates when the signature will expire.
-     */
-    private Long expires;
-    /**
-     * Optional: A random unique value generated for this signature.
-     */
-    private String nonce = "";
-    /**
-     * The algorithm used for the HTTP message signature.
-     */
-    private String algorithm;
-    /**
-     * The identifier for the key material.
-     */
-    private String keyId;
-
-    /**
-     * Label of the signature.
-     */
-    private String signLabel;
-    /**
-     * List of component IDs covered by the signature.
-     */
-    private List<Component> coveredHeaders;
-
-    /**
-     * dnsTarget contains target IP-address.
-     */
-    private String dnsTarget;
 
     /**
      * @return the signLabel

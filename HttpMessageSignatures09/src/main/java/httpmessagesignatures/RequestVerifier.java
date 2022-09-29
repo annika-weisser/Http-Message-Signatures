@@ -17,14 +17,20 @@
 package httpmessagesignatures;
 
 import java.net.InetAddress;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Header;
 
+import exceptions.NoSuchSignatureException;
 import signature.components.Component;
 import signature.components.KeyMap;
 import signature.components.SignatureParameter;
@@ -46,9 +52,17 @@ public class RequestVerifier extends Verifier {
      * @param SignedHttpRequest to validate.
      * @param List of public keys.
      * @return Returns true, if the signature is valid.
-     * @throws Exception
+     * @throws NoSuchSignatureException
+     * @throws URISyntaxException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeyException
+     * @throws InvalidKeySpecException
+     * @throws SignatureException
+     * @throws InvalidAlgorithmParameterException
      */
-    protected static boolean verifyRequest(SignedHttpRequest request, List<KeyMap> keys) throws Exception {
+    protected static boolean verifyRequest(SignedHttpRequest request, List<KeyMap> keys)
+            throws NoSuchSignatureException, NoSuchAlgorithmException, URISyntaxException, InvalidKeyException,
+            InvalidAlgorithmParameterException, SignatureException, InvalidKeySpecException {
         String host = request.getURI().getHost();
         boolean verify = false;
 
@@ -65,7 +79,7 @@ public class RequestVerifier extends Verifier {
             sigLabels.add(signLabel);
 
             // Section 3.2 step 2 anaylize Signatur-Input
-            List<Component> coveredHeaders = getCoveredHeaders(signatureInputHeader, signLabel);
+            List<Component> coveredHeaders = getCoveredHeaders(signatureInputHeader);
             Map<String, String> signatureParameterMap = extractSignatureParameter(signatureInputHeader, signLabel);
 
             //Step 3 get Signature as ByteArray

@@ -110,7 +110,7 @@ public class TestMessageBody {
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params,
                 EntityUtils.toString(request.getEntity()));
         signedRequest = HttpMessageSignerFacade.signRequest(signedRequest, privateKey);
-        signedRequest.messageBody = "{\"bye\": \"world\"}";
+        signedRequest.setMessageBody("{\"bye\": \"world\"}");
 
         byte[] publicKey = KeyProvider.getPublicEccKey();
         List<KeyMap> listeKeys = new ArrayList<>();
@@ -160,7 +160,7 @@ public class TestMessageBody {
 
         signedResponse = HttpMessageSignerFacade.signResponse(signedResponse, privateKey);
 
-        signedResponse.messageBody = "{\"bye\": \"world\"}";
+        signedResponse.setMessageBody("{\"bye\": \"world\"}");
         byte[] publicKey = KeyProvider.getPublicEccKey();
         List<KeyMap> listeKeys = new ArrayList<>();
         KeyMap map = new KeyMap("test-key-ecc-p256", publicKey);

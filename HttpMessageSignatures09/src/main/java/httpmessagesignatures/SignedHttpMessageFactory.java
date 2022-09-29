@@ -35,7 +35,11 @@ import signature.messages.SignedHttpResponse;
  * @company Koerber Pharma Software GmbH
  * @created 23.05.2022
  */
-public class SignedHttpMessageFactory {
+public abstract class SignedHttpMessageFactory {
+
+    private SignedHttpMessageFactory() {
+
+    }
 
     /**
      * @param request
@@ -197,4 +201,5 @@ public class SignedHttpMessageFactory {
 
         return signedResponse;
     }
+
 }

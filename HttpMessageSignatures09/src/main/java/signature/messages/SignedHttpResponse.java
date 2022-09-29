@@ -240,7 +240,7 @@ public class SignedHttpResponse extends SignedHttpMessage implements HttpRespons
      * @see signature.messages.SignedHttpMessage#setMessageBody(java.lang.String)
      */
     @Override
-    void setMessageBody(String messageBody) {
+    public void setMessageBody(String messageBody) {
         this.messageBody = messageBody;
 
     }

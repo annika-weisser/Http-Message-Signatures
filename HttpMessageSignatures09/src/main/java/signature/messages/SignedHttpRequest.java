@@ -36,6 +36,7 @@ import signature.components.SignatureParameter;
  * @created 20.05.2022
  */
 public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest {
+
     /** HTTP method of request */
     private final String method;
     /** URI of the request */
@@ -133,7 +134,7 @@ public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest 
     * @param messageBody
      */
     @Override
-    void setMessageBody(String messageBody) {
+    public void setMessageBody(String messageBody) {
         this.messageBody = messageBody;
 
     }

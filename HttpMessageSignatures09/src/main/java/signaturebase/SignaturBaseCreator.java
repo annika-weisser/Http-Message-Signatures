@@ -44,7 +44,7 @@ import signature.messages.SignedHttpMessage;
 public abstract class SignaturBaseCreator {
 
     /** list of header identifiers of the headers covered by the signature */
-    protected List<Component> coveredHeaders = null;
+    protected List<Component> coveredHeaders;
     /** parameters associated with the signature */
     protected SignatureParameter params;
     /** signaturebase as byte array */
@@ -58,7 +58,7 @@ public abstract class SignaturBaseCreator {
         this.message = message;
     }
 
-    protected abstract void create() throws Exception;
+    protected abstract void create() throws URISyntaxException, NoSuchAlgorithmException;
 
     /**
      * Extract the query parameters from the URI.
@@ -97,7 +97,7 @@ public abstract class SignaturBaseCreator {
      * @return Returns the bytes of the signature base
      * @throws NoSuchAlgorithmException
      */
-    public byte[] createSignatureBaseForMessage(SignedHttpMessage message, SignatureParameter sigparams)
+    protected byte[] createSignatureBaseForMessage(SignedHttpMessage message, SignatureParameter sigparams)
             throws NoSuchAlgorithmException {
         this.message = message;
 

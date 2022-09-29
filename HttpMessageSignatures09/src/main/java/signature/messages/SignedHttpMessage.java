@@ -38,7 +38,7 @@ public abstract class SignedHttpMessage extends AbstractHttpMessage {
     /** signaturebase */
     private String signatureBase;
     /** message body */
-    public String messageBody;
+    protected String messageBody;
 
     /**
      * Constructor.
@@ -101,7 +101,7 @@ public abstract class SignedHttpMessage extends AbstractHttpMessage {
     /**
      * @param messageBody
      */
-    abstract void setMessageBody(String messageBody);
+    public abstract void setMessageBody(String messageBody);
 
     /**
      * @return the messageBody

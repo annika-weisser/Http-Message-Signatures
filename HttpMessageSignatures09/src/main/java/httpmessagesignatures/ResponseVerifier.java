@@ -64,7 +64,7 @@ public class ResponseVerifier extends Verifier {
             sigLabels.add(signLabel);
 
             // Section 3.2 step 2 anaylize Signatur-Input
-            coveredHeaders = getCoveredHeaders(signatureInputHeader, signLabel);
+            coveredHeaders = getCoveredHeaders(signatureInputHeader);
             Map<String, String> signatureParameterMap = extractSignatureParameter(signatureInputHeader, signLabel);
 
             // get Signature as ByteArray

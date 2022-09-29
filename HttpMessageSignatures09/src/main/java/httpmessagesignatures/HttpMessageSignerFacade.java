@@ -39,6 +39,11 @@ import signature.messages.SignedHttpResponse;
  * @created 15.03.2022
  */
 public class HttpMessageSignerFacade {
+
+    private HttpMessageSignerFacade() {
+
+    }
+
     /**
     *@return Returns signed Request.
      * @throws URISyntaxException
@@ -70,8 +75,7 @@ public class HttpMessageSignerFacade {
      */
     public static SignedHttpResponse signResponse(SignedHttpResponse response, byte[] privateKeyMaterial)
             throws InvalidKeyException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
-            InvalidKeySpecException, SignatureException, AmbiguousSignatureLableException, URISyntaxException,
-            SocketException, UnknownHostException {
+            InvalidKeySpecException, SignatureException, AmbiguousSignatureLableException, URISyntaxException {
         return ResponseSigner.signResponse(response, privateKeyMaterial);
     }
 

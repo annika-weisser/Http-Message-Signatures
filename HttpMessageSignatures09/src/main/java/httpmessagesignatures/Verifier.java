@@ -283,10 +283,9 @@ public abstract class Verifier {
     /**
      * Extract the ids of the covered components from the signature input header.
      * @param signatureInput
-     * @param signatureLabel
      * @return List of coveredHeaders.
      */
-    protected static List<Component> getCoveredHeaders(Header signatureInput, String signatureLabel) {
+    protected static List<Component> getCoveredHeaders(Header signatureInput) {
         List<Component> coveredHeaders = new ArrayList<>();
 
         String value = signatureInput.getValue();
