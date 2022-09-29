@@ -60,9 +60,11 @@ public class RequestVerifier extends Verifier {
      * @throws SignatureException
      * @throws InvalidAlgorithmParameterException
      */
+
     protected static boolean verifyRequest(SignedHttpRequest request, List<KeyMap> keys)
             throws NoSuchSignatureException, NoSuchAlgorithmException, URISyntaxException, InvalidKeyException,
             InvalidAlgorithmParameterException, SignatureException, InvalidKeySpecException {
+
         String host = request.getURI().getHost();
         boolean verify = false;
 

@@ -315,6 +315,7 @@ public class HttpMessageSignatureTest {
                 new Component("@method", null, false), new Component("@path", null, false),
                 new Component("@authority", null, false), new Component("content-type", null, false),
                 new Component("content-length", null, false));
+
         SignatureParameter params = new SignatureParameter("ed25519", "test-key-ed25519", "sig-b26", coveredHeaders);
 
         SignedHttpRequest signedRequest = SignedHttpMessageFactory.createSignedHttpRequest(request, params);

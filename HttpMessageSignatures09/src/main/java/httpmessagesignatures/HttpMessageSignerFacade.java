@@ -75,7 +75,8 @@ public class HttpMessageSignerFacade {
      */
     public static SignedHttpResponse signResponse(SignedHttpResponse response, byte[] privateKeyMaterial)
             throws InvalidKeyException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
-            InvalidKeySpecException, SignatureException, AmbiguousSignatureLableException, URISyntaxException {
+            InvalidKeySpecException, SignatureException, AmbiguousSignatureLableException, URISyntaxException,
+            SocketException, UnknownHostException {
         return ResponseSigner.signResponse(response, privateKeyMaterial);
     }
 

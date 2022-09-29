@@ -120,7 +120,6 @@ public class SignedHttpRequest extends SignedHttpMessage implements HttpRequest 
             requestline = new BasicRequestLine(method, uri, requestline.getProtocolVersion());
         }
         this.uri = new URI(uri);
-
     }
 
     /**
